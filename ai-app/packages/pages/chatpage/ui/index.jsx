@@ -1,10 +1,10 @@
 import './index.css';
-// import { Chat } from '@chatapp/chat';
+import { Chat } from '@aiapp/chat';
 
 export const ChatPage = () => {
   return (
     <section className="chat-page">
-      {/* <Chat /> */}
+      <Chat />
       <p>chatpage</p>
     </section>
   )
