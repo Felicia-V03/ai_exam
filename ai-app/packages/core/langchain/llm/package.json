@@ -1,0 +1,4 @@
+{
+    "name" : "@aiapp/llm",
+    "main" : "index.js"
+}

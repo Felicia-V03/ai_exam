@@ -7,6 +7,7 @@ export const Message = ({ text, role }) => {
         <span className="message__sender">{ role }</span>
         <p className="message__content">
           { text }
+          message
         </p>
       </section>
     </article>

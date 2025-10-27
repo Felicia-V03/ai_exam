@@ -13,10 +13,10 @@ export const Chat = () => {
   return (
     <section className="chat">
       <section className="chat__messages">
-        { messageComponents }
+        { messageComponents } 
         { loading && <Loading /> }
       </section>
-
+      <p>chat</p>
       <form className="chat__form" onSubmit={handleSubmit}>
         <input type="text" className="chat__input" ref={inputRef}/>
         <button className="chat__btn">Skicka!</button>
