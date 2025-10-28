@@ -14,12 +14,14 @@ export const useChatLogic = () => {
     setLoading(true);
     setMessages((prev) => [...prev, { role: 'user', text: question }]);
     inputRef.current.value = '';
-    const answer = await chain.invoke({ question }, {configurable : { sessionId : 'hejsan'}});
+    const answer = await chain.invoke({question}, { configurable : { sessionId : 'hejsan' }});
 
     setMessages((prev) => [
       ...prev,
-      { role: 'assistant', text: answer.response || 'No response' },
+      { role: 'assistant', text: answer.response || 'Ingen respons.' },
     ]);
+
+    console.log('Answer from chain:', answer);
 
     setLoading(false);
   };
