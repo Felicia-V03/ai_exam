@@ -1,10 +1,16 @@
-import { useState, useRef } from 'react';
-import { chain } from '@aiapp/chains';
+import { useState, useRef, useEffect } from 'react';
+import { chain } from '@chatapp/chains';
 
 export const useChatLogic = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
+  
+  useEffect(() => {
+    setMessages([
+      { role: 'assistant', text: 'Hej, det är TechNova AB kundtjäntbot, Techchi. Hur kan jag hjälpa dig?' }
+    ]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,17 +20,25 @@ export const useChatLogic = () => {
     setLoading(true);
     setMessages((prev) => [...prev, { role: 'user', text: question }]);
     inputRef.current.value = '';
-    const answer = await chain.invoke({question}, { configurable : { sessionId : 'hejsan' }});
 
-    setMessages((prev) => [
-      ...prev,
-      { role: 'assistant', text: answer.response || 'Ingen respons.' },
-    ]);
-
-    console.log('Answer from chain:', answer);
+    try {
+      const answer = await chain.invoke({ question });
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', text: answer?.response || answer || 'Ingen respons.' },
+      ]);
+      console.log('Answer from chain:', answer);
+    } catch (error) {
+      console.error('Chain error:', error);
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', text: 'Ett fel uppstod när svaret hämtades.' },
+      ]);
+    }
 
     setLoading(false);
   };
+
 
   return { messages, loading, inputRef, handleSubmit };
 }

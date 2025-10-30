@@ -1,3 +1,3 @@
-export const documents = (docs) => {
-  return docs.map(doc => docs.pageContent).join('\n\n');
+export const dataDocuments = (docs) => {
+  return docs.map(doc => doc.pageContent).join('\n\n');
 }

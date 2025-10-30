@@ -1,13 +1,13 @@
 import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
 import { OllamaEmbeddings } from "@langchain/ollama";
-import { client } from '@aiapp/client';
+import { client } from '@chatapp/client';
 
 const embeddings = new OllamaEmbeddings({
   model: 'llama3.1:8b'
 });
 
 const vectorStore = new SupabaseVectorStore(embeddings, {
-  client: client.supabase,
+  client,
   tableName: 'documents',
   queryName: 'match_documents'
 });

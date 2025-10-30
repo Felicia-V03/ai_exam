@@ -1,49 +1,46 @@
 import { RunnableSequence, RunnablePassthrough } from '@langchain/core/runnables';
-import { retriever } from '@aiapp/retriever';
-import { standaloneQuestionTemplate, answerTemplate } from '@aiapp/templates';
-import { documents } from '@aiapp/documents';
-import { llm } from '@aiapp/llm';
+import { retriever } from '@chatapp/retriever';
+import { standaloneQuestionTemplate, answerTemplate } from '@chatapp/templates';
+import { dataDocuments } from '@chatapp/datadocuments';
+import { llm } from '@chatapp/llm';
 import { StringOutputParser } from '@langchain/core/output_parsers';
 import { BufferMemory } from 'langchain/memory';
 import { ConversationChain } from 'langchain/chains';
 
 const memory = new BufferMemory({
-    memoryKey : 'chat_history',
-    returnMessages : true,
-    inputKey : 'question'
+  memoryKey : 'chat_history',
+  returnMessages : true,
+  inputKey : 'question',
+  maxTokenLimit : 0
 });
 
-// 1. Konvertera frpgan till en standalone question
 const standaloneQuestionChain = RunnableSequence.from([
-    standaloneQuestionTemplate,
-    llm,
-    new StringOutputParser()
+  standaloneQuestionTemplate,
+  llm,
+  new StringOutputParser()
 ]);
 
-// 2. Använda standalone question för att söka kontext från databasen
 const retrieverChain = RunnableSequence.from([
-    (data) => {
-        return data.standaloneQuestion
-    },
-    retriever,
-    documents
+  (data) => {
+    return data.standaloneQuestion
+  },
+  retriever,
+  dataDocuments
 ]);
-
-// 3. Använda kontexten och den ursprungliga frågan för att fråga språkmodellen
-// const answerChain = RunnableSequence.from([
-//     answerTemplate,
-//     llm,
-//     new StringOutputParser()
-// ]);
 
 const conversationChain = new ConversationChain({
-    llm,
-    prompt : answerTemplate,
-    memory
+  llm,
+  prompt : answerTemplate,
+  memory
 });
 
 export const chain = RunnableSequence.from([
-  { standaloneQuestion: standaloneQuestionChain, originalQuestion: new RunnablePassthrough() },
-  { context: retrieverChain, question: ({ originalQuestion }) => originalQuestion.question },
+  { standaloneQuestion: standaloneQuestionChain, 
+    originalQuestion: new RunnablePassthrough() 
+  },
+  { 
+    context: retrieverChain, 
+    question: ({ originalQuestion }) => originalQuestion.question 
+  },
   conversationChain
 ]);

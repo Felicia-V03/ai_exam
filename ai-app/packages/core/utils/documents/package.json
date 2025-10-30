@@ -1,4 +1,4 @@
 {
-    "name" : "@aiapp/documents",
+    "name" : "@chatapp/datadocuments",
     "main" : "index.js"
 }

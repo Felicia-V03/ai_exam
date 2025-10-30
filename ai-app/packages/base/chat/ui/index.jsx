@@ -1,7 +1,7 @@
 import './index.css';
-import { Message } from '@aiapp/message';
-import { Loading } from '@aiapp/loading';
-import { useChatLogic } from '@aiapp/usechat';
+import { Message } from '@chatapp/message';
+import { Loading } from '@chatapp/loading';
+import { useChatLogic } from '@chatapp/usechat';
 
 export const Chat = () => {
   const { messages, loading, handleSubmit, inputRef } = useChatLogic();
