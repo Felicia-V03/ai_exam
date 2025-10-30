@@ -1,5 +1,5 @@
 import './index.css';
-import { Chat } from '@aiapp/chat';
+import { Chat } from '@chatapp/chat';
 
 export const ChatPage = () => {
   return (

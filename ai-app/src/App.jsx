@@ -1,4 +1,4 @@
-import { ChatPage } from "@aiapp/chatpage";
+import { ChatPage } from "@chatapp/chatpage";
 
 function App() {
   return (
