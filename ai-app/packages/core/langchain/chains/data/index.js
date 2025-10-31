@@ -4,14 +4,14 @@ import { standaloneQuestionTemplate, answerTemplate } from '@chatapp/templates';
 import { dataDocuments } from '@chatapp/datadocuments';
 import { llm } from '@chatapp/llm';
 import { StringOutputParser } from '@langchain/core/output_parsers';
-import { BufferMemory } from 'langchain/memory';
+import { ConversationSummaryMemory } from 'langchain/memory';
 import { ConversationChain } from 'langchain/chains';
 
-const memory = new BufferMemory({
+const memory = new ConversationSummaryMemory({
+  llm,
   memoryKey : 'chat_history',
   returnMessages : true,
   inputKey : 'question',
-  maxTokenLimit : 0
 });
 
 const standaloneQuestionChain = RunnableSequence.from([
