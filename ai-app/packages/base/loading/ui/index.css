@@ -1,0 +1,26 @@
+.loading {
+  display: inline-flex;
+  width: auto;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #9CC3C0;
+  margin: 0 3px;
+  animation: loading 1s linear infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes loading {
+  0% {
+    transform: translateY(-20px);
+  }
+  25%, 50% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
