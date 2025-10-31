@@ -12,11 +12,13 @@ export const Chat = () => {
 
   return (
     <section className="chat">
+      <section className="chat__head">
+        <h1 className="chat__title">Techchi Chat</h1>
+      </section>
       <section className="chat__messages">
         { messageComponents } 
         { loading && <Loading /> }
       </section>
-      <p>chat</p>
       <form className="chat__form" onSubmit={handleSubmit}>
         <input type="text" className="chat__input" ref={inputRef}/>
         <button className="chat__btn">Skicka!</button>
